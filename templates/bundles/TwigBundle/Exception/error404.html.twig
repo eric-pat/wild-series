@@ -1,0 +1,26 @@
+{# templates/bundles/TwigBundle/Exception/error404.html.twig #}
+{% extends 'base.html.twig' %}
+
+{% block body %}
+
+    <div class="container mt-xxl-3">
+        <div class="row">
+            <div class="col-sm-12 ">
+                <div class="text-center">
+                    <div>
+                        <h1 class="text-center ">Error 404</h1>
+                    </div>
+
+                    <div>
+                        <h3 class="h2">
+                            Look like you're lost
+                        </h3>
+                        <p>the page you are looking for not avaible!</p>
+                        <a href="{{ path('app_index') }}">Go to Home</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}

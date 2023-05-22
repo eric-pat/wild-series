@@ -1,0 +1,17 @@
+@import "~bootstrap/scss/bootstrap";
+@import "modules/navbar";
+
+:root {
+    --primary-color: rgb(46, 46, 65);
+    --secondary-color: rgb(77, 51, 71);
+    --tertiary-color: rgb(134, 17, 46);
+    --quaternary-color: rgb(155, 62, 27);
+    --quinary-color: rgb(251, 109, 16);
+}
+
+body {
+    background-color: var(--quaternary-color);
+    display: flex;
+    flex-direction: column;
+}
+

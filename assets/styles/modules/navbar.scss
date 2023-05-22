@@ -1,0 +1,45 @@
+.navbar {
+  background-color: var(--primary-color);
+}
+
+.navbar a {
+  color: var(--quinary-color);
+}
+
+.navbar a:hover {
+  color: var(--quaternary-color);
+}
+
+.navbar .nav-link.active {
+  color: var(--quaternary-color);
+}
+
+.navbar svg {
+  color: var(--quinary-color);
+}
+
+.navbar svg:hover {
+  color: var(--quaternary-color);
+}
+
+.navbar-toggler:focus {
+  box-shadow: none;
+}
+
+.offcanvas {
+  background-color: var(--primary-color);
+}
+
+.offcanvas h5 {
+  color: var(--quinary-color);
+}
+
+.offcanvas button {
+  background-color: transparent;
+  padding: 0;
+  border: 0;
+}
+
+.navbar img {
+  width: 50%;
+}
