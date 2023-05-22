@@ -22,6 +22,8 @@ class Program
     #[ORM\ManyToOne]
     #[ORM\JoinColumn(nullable: false)]
     private ?Category $category = null;
+    private string    $program;
+    private string    $synopsis = '';
 
     public function getId(): ?int
     {
@@ -60,6 +62,18 @@ class Program
     public function setCategory(?Category $category): self
     {
         $this->category = $category;
+
+        return $this;
+    }
+
+    public function getSynopsis(): ?string
+    {
+        return $this->synopsis;
+    }
+
+    public function setSynopsis(string $synopsis): self
+    {
+        $this->synopsis = $synopsis;
 
         return $this;
     }

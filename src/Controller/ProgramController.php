@@ -2,6 +2,8 @@
 // src/Controller/ProgramController.php
 namespace App\Controller;
 
+use App\Repository\CategoryRepository;
+use App\Repository\ProgramRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -33,5 +35,17 @@ class ProgramController extends AbstractController
     public function error404(): Response
     {
         return $this->render('error404.html.twig');
+    }
+
+    #[Route('/program/list/', name: 'program_list')]
+    public function list(ProgramRepository $programRepository, CategoryRepository $categoryRepository): Response
+    {
+        $programs = $programRepository->findAll();
+        $categories = $categoryRepository->findAll();
+
+        return $this->render('program/list.html.twig', [
+            'programs' => $programs,
+            'categories' => $categories,
+        ]);
     }
 }
