@@ -1,0 +1,32 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <h1 class="d-flex justify-content-center my-5">Séries {{ category.name }} :</h1>
+
+    {% if programs is empty %}
+    <h3 class="d-flex justify-content-center my-5">Aucune série trouvée.</h3>
+    {% else %}
+
+    <div class="d-flex justify-content-evenly mb-5">
+        <div class="d-flex flex-wrap justify-content-evenly">
+            <ul>
+                {% for program in programs %}
+                    <li>
+                        <strong>ID:</strong> {{ program.id }}<br>
+                        <strong>Titre:</strong> {{ program.title }}<br>
+                        <strong>Résumé:</strong> {{ program.synopsis }}<br>
+                        <a href="{{ path('program_show', {'id': program.id}) }}">Voir la
+                            fiche</a>
+                    </li>
+                {% endfor %}
+            </ul>
+        </div>
+    </div>
+    {% endif %}
+
+    <a href="{{ path('category_index') }}" class="d-flex justify-content-center
+    text-decoration-none">
+        <button class="btn btn-return" type="button">Retour aux categories</button>
+    </a>
+{% endblock %}
+

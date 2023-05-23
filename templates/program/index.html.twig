@@ -1,7 +1,33 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Wild Series - index{% endblock %}
+{% block title %}Wild Series - All programs{% endblock %}
 
 {% block body %}
-    <h1>{{ website }} index</h1>
+    <section>
+        <h1 class="d-flex justify-content-center my-5">Les programmes :</h1>
+
+        <div class="d-flex justify-content-evenly mb-5">
+            <div class="d-flex flex-wrap justify-content-evenly">
+                {% for program in programs %}
+                    <div class="card" style="width: 18rem; background-color: var(--quinary-color)">
+                        <img class="card-img-top" src="{{ program.poster }}" alt="Poster">
+                        <div class="card-body">
+                            <h5 class="card-title">{{ program.title }}</h5>
+                            <h6>Catégorie : {{ program.category.name }}</h6>
+                            <p class="card-text">{{ program.synopsis }}</p>
+                            <a href="{{ path("program_show", { id: program.id }) }}">Voir la fiche</a>
+                        </div>
+                    </div>
+                {% else %}
+                    Aucune série trouvée.
+                {% endfor %}
+            </div>
+
+        </div>
+        <a href="{{ path('app_index') }}" class="d-flex justify-content-center text-decoration-none">
+            <button class="btn btn-return" type="button">Retour à
+                l'accueil</button>
+        </a>
+    </section>
 {% endblock %}
+

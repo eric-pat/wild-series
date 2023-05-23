@@ -13,4 +13,10 @@ class DefaultController extends AbstractController
     {
         return $this->render('/index.html.twig');
     }
+
+    #[Route('/404', name: 'error_404', methods: ['GET'])]
+    public function error404(): Response
+    {
+        return $this->render('error404.html.twig');
+    }
 }

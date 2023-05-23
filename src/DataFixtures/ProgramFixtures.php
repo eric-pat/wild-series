@@ -2,11 +2,11 @@
 
 namespace App\DataFixtures;
 
-use App\Entity\Program;
-use App\DataFixtures\CategoryFixtures;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Common\DataFixtures\DependentFixtureInterface;
 use Doctrine\Persistence\ObjectManager;
+use App\Entity\Program;
+use App\DataFixtures\CategoryFixtures;
 
 class ProgramFixtures extends Fixture implements DependentFixtureInterface
 {
@@ -20,7 +20,7 @@ class ProgramFixtures extends Fixture implements DependentFixtureInterface
             $this->getReference('category_Horreur'),
         ];
 
-        for ($i = 1; $i <= 5; $i++) {
+        for ($i = 1; $i <= 10; $i++) {
             $program = new Program();
             $program->setTitle('Program ' . $i);
             $program->setSynopsis('Synopsis for Program ' . $i);

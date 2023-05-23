@@ -8,44 +8,38 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
+#[Route('/program', name: 'program_')]
 class ProgramController extends AbstractController
 {
-    #[Route('/program/', name: 'program_index')]
-    public function index(): Response
-    {
-        return $this->render('program/index.html.twig', [
-            'website' => 'Wild Series',
-        ]);
-    }
-
-    #[Route('/program/{id}/', name: 'program_show', requirements: ['id' => '\d+'], methods: ['GET'])]
-    public function show($id): Response
-    {
-        // Vérifier si l'ID est un entier
-        if (!ctype_digit($id)) {
-            throw $this->createNotFoundException();
-        }
-
-        return $this->render('program/show.html.twig', [
-            'id' => $id,
-        ]);
-    }
-
-    #[Route('/404', name: 'error_404', methods: ['GET'])]
-    public function error404(): Response
-    {
-        return $this->render('error404.html.twig');
-    }
-
-    #[Route('/program/list/', name: 'program_list')]
-    public function list(ProgramRepository $programRepository, CategoryRepository $categoryRepository): Response
+    #[Route('/', name: 'index')]
+    public function index(
+        ProgramRepository $programRepository,
+        CategoryRepository $categoryRepository
+    ): Response
     {
         $programs = $programRepository->findAll();
         $categories = $categoryRepository->findAll();
 
-        return $this->render('program/list.html.twig', [
+        return $this->render('program/index.html.twig', [
             'programs' => $programs,
             'categories' => $categories,
         ]);
     }
+
+    #[Route('/show/{id<^[0-9]+$>}', name: 'show')]
+    public function show(int $id, ProgramRepository $programRepository):Response
+    {
+        $program = $programRepository->findOneBy(['id' => $id]);
+        // same as $program = $programRepository->find($id);
+
+        if (!$program) {
+            throw $this->createNotFoundException(
+                'No program with id : '.$id.' found in program\'s table.'
+            );
+        }
+        return $this->render('program/show.html.twig', [
+            'program' => $program,
+        ]);
+    }
+
 }

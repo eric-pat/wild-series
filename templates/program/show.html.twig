@@ -1,7 +1,18 @@
-{% block title %}Wild Series - show{% endblock %}
-
 {% extends 'base.html.twig' %}
 
+{% block title %}Wild-series #{{ program.id }}{% endblock %}
+
 {% block body %}
-    <h1>Program {{ id }}</h1>
+    <div class="d-flex justify-content-center mt-5">
+    <div class="card" style="width: 36rem;background-color: var(--quinary-color)">
+        <img class="card-img-top" src="{{program.poster}}" alt="{{ program.title }}">
+        <div class="card-body">
+            <h5 class="card-title">{{ program.title }}</h5>
+            <p class="card-text">{{ program.synopsis }}</p>
+            <a href="{{ path('program_index') }}">
+                Retour à la liste des programmes
+            </a>
+        </div>
+    </div>
+    </div>
 {% endblock %}
