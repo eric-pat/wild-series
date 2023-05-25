@@ -3,16 +3,29 @@
 {% block title %}Wild-series #{{ program.id }}{% endblock %}
 
 {% block body %}
-    <div class="d-flex justify-content-center mt-5">
-    <div class="card" style="width: 36rem;background-color: var(--quinary-color)">
-        <img class="card-img-top" src="{{program.poster}}" alt="{{ program.title }}">
-        <div class="card-body">
-            <h5 class="card-title">{{ program.title }}</h5>
-            <p class="card-text">{{ program.synopsis }}</p>
-            <a href="{{ path('program_index') }}">
-                Retour à la liste des programmes
-            </a>
+    <div class="d-flex justify-content-center my-5">
+
+        <div class="card" style="width: 36rem;background-color: var(--quinary-color)">
+            <img class="card-img-top" src="{{ asset('images/poster/' ~ program.poster) }}"
+                 alt="{{ program.title }}">
+            <div class="card-body">
+                <h5 class="card-title">{{ program.title }}</h5>
+                <p class="card-text">{{ program.synopsis }}</p>
+
+                <h6>Saisons :</h6>
+                {% for season in program.seasons %}
+                    <div>
+                        <a href="{{ path('program_season_show', {'programId': program.id, 'seasonId': season.id}) }}"><strong>Saison {{
+                                season.number }}</strong></a>
+                        <p>Description : {{ season.description }}</p>
+                    </div>
+                {% endfor %}
+
+                <a href="{{ path('program_index') }}">
+                    Retour à la liste des programmes
+                </a>
+            </div>
         </div>
     </div>
-    </div>
 {% endblock %}
+
