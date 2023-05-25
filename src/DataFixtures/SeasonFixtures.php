@@ -2,42 +2,61 @@
 
 namespace App\DataFixtures;
 
+use App\Entity\Season;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Common\DataFixtures\DependentFixtureInterface;
 use Doctrine\Persistence\ObjectManager;
-use App\Entity\Season;
+
+use Faker\Factory;
 
 class SeasonFixtures extends Fixture implements DependentFixtureInterface
 {
     public function load(ObjectManager $manager): void
     {
-        $program = $this->getReference('program_1');
+//        $program = $this->getReference('program_1');
+//
+//        $season = new Season();
+//        $season->setProgram($program);
+//        $season->setNumber(1);
+//        $season->setYear(2021);
+//        $season->setDescription('default description saison 1');
+//
+//        $manager->persist($season);
+//
+//        $this->addReference('program_1_season_1',  $season);
+//
+//        $program = $this->getReference('program_1');
+//
+//        $season = new Season();
+//        $season->setProgram($program);
+//        $season->setNumber(2);
+//        $season->setYear(2023);
+//        $season->setDescription('default description saison 2');
+//
+//        $manager->persist($season);
+//
+//        $this->addReference('program_1_season_2',  $season);
+//
+//        $manager->flush();
 
-        $season = new Season();
-        $season->setProgram($program);
-        $season->setNumber(1);
-        $season->setYear(2021);
-        $season->setDescription('default description saison 1');
+        $faker = Factory::create();
 
-        $manager->persist($season);
+        for ($program = 1; $program <= 5; $program++) {
+            for ($saison = 1; $saison <=5; $saison++) {
 
-        $this->addReference('program_1_season_1',  $season);
 
-        $program = $this->getReference('program_1');
+                $season = new Season();
+                $season->setNumber($saison);
+                $season->setYear($faker->year());
+                $season->setDescription($faker->paragraphs(1, true));
+                $season->setProgram($this->getReference('program_' . $program));
 
-        $season = new Season();
-        $season->setProgram($program);
-        $season->setNumber(2);
-        $season->setYear(2023);
-        $season->setDescription('default description saison 2');
-
-        $manager->persist($season);
-
-        $this->addReference('program_1_season_2',  $season);
+                $manager->persist($season);
+                $this->addReference('program_' . $program . '_season_' . $saison, $season);
+            }
+        }
 
         $manager->flush();
-
-
     }
 
     public function getDependencies(): array
