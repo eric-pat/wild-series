@@ -18,7 +18,15 @@
                             <h6>Catégorie : {{ program.category.name }}</h6>
                             <p class="card-text">{{ program.synopsis }}</p>
                             <a href="{{ path("program_show", { id: program.id }) }}">
-                                Voir la fiche</a>
+                                <button class="btn btn-primary">
+                                    Voir la fiche
+                                </button>
+                            </a>
+                            <form method="post" action="{{ path('program_delete', {'id': program.id}) }}"
+                                  onsubmit="return confirm('Are you sure you want to delete this item?');">
+                                <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ program.id) }}">
+                                <button class="btn btn-danger">Delete</button>
+                            </form>
                         </div>
                     </div>
                 {% else %}
@@ -29,9 +37,15 @@
         </div>
         <a href="{{ path('app_index') }}" class="d-flex justify-content-center
         text-decoration-none mb-5">
-            <button class="btn btn-return" type="button">Retour à
-                l'accueil</button>
+            <button class="btn btn-return" type="button">
+                Retour à l'accueil
+            </button>
+        </a>
+        <a href="{{ path('program_new') }}" class="d-flex justify-content-center
+        text-decoration-none mb-5">
+            <button class="btn btn-return" type="button">
+                Ajouter une série
+            </button>
         </a>
     </section>
 {% endblock %}
-

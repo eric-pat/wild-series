@@ -66,6 +66,7 @@ class ProgramController extends AbstractController
 
             // Enregistrer l'entité en base de données
             $programRepository->save($program, true);
+            $this->addFlash('success', 'Le nouveau program a été créé !');
 
             return $this->redirectToRoute('program_index');
         }
@@ -99,12 +100,27 @@ class ProgramController extends AbstractController
     #[Entity('program', options: ['mapping'=> ['programId'=>'id']])]
     #[Entity('season', options: ['mapping'=>['seasonId'=>'id']])]
     #[Entity('episode', options: ['mapping'=>['episodeId'=>'id']])]
-    public function showEpisode(Program $program, Season $season, Episode $episode): Response
+    public function showEpisode(Program $program,
+                                Season $season,
+                                Episode $episode): Response
     {
         return $this->render('program/episode_show.html.twig', [
             'program' => $program,
             'season' => $season,
             'episode' => $episode,
         ]);
+    }
+
+    #[Route('/{id}', name: 'delete', methods: ['POST'])]
+    public function delete(Request $request,
+                           Program $program,
+                           ProgramRepository $programRepository): Response
+    {
+        if ($this->isCsrfTokenValid('delete'.$program->getId(), $request->request->get('_token'))) {
+            $programRepository->remove($program, true);
+            $this->addFlash('danger', 'Le program a été supprimé avec succès !');
+        }
+
+        return $this->redirectToRoute('program_index', [], Response::HTTP_SEE_OTHER);
     }
 }
