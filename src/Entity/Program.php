@@ -6,8 +6,11 @@ use App\Repository\ProgramRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: ProgramRepository::class)]
+#[UniqueEntity('title', message: 'Ce titre existe déjà')]
 class Program
 {
     #[ORM\Id]
@@ -16,9 +19,18 @@ class Program
     private ?int $id = null;
 
     #[ORM\Column(length: 255)]
+    #[Assert\NotBlank(message: 'Le champ title ne doit pas être vide')]
+    #[Assert\Length(max: 255,
+        maxMessage: 'Le champ title doit faire moins de 255 caractères')]
     private ?string $title = null;
 
     #[ORM\Column(length: 255)]
+    #[Assert\NotBlank(message: 'Le champ synopsis de la série ne doit pas être vide')]
+    #[Assert\Regex(
+        pattern: '/^(?!.*plus belle la vie)/',
+        match: true,
+        message: 'On parle de vraies séries ici'
+    )]
     private ?string $synopsis = null;
 
     #[ORM\Column(length: 255, nullable: true)]
