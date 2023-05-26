@@ -19,7 +19,7 @@ class Season
     #[ORM\Column]
     private ?int $number = null;
 
-    #[ORM\Column(nullable: true)]
+    #[ORM\Column]
     private ?int $year = null;
 
     #[ORM\Column(type: Types::TEXT)]

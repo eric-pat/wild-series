@@ -6,6 +6,7 @@ use App\Repository\CategoryRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 
+
 #[ORM\Entity(repositoryClass: CategoryRepository::class)]
 class Category
 {
@@ -59,7 +60,7 @@ class Category
 
         return $this;
     }
-    public function getPrograms(): Collection
+    public function getPrograms(): ArrayCollection
     {
         return $this->programs;
     }

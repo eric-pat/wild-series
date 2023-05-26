@@ -1,0 +1,11 @@
+{% extends "base.html.twig" %}
+
+{% block body %}
+    <div class="d-flex justify-content-center my-5">
+        {{ form_start(form) }}
+        {{ form_label(form.name) }}
+        {{ form_widget(form.name) }}
+        <button type="submit" class="btn btn-return">Ajout d'une category</button>
+        {{ form_end(form) }}
+    </div>
+{% endblock %}

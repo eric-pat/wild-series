@@ -132,4 +132,11 @@ class Program
 
         return $this;
     }
+
+    public function setPosterPath($poster): static
+    {
+        $this->poster = $poster;
+
+        return $this;
+    }
 }

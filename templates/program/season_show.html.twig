@@ -1,10 +1,12 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Wild-series #{{ program.id }}{% endblock %}
+{% block title %}Wild-series #{{ program.title }}{% endblock %}
 
 {% block body %}
-    <h1 class="d-flex justify-content-center my-5">{{ program.title }} - Saison {{ season
-        .number }}</h1>
+    <h1 class="d-flex justify-content-center my-5">
+        {{ program.title }} - Saison {{ season.number }}
+    </h1>
+
     <div class="d-flex justify-content-center my-5">
 
         <div class="card" style="width: 36rem;background-color: var(--quinary-color)">
