@@ -66,7 +66,7 @@ class ProgramController extends AbstractController
 
             // Enregistrer l'entité en base de données
             $programRepository->save($program, true);
-            $this->addFlash('success', 'Le nouveau program a été créé !');
+            $this->addFlash('success', 'La nouvelle série a été créée avec succès !');
 
             return $this->redirectToRoute('program_index');
         }
@@ -118,7 +118,7 @@ class ProgramController extends AbstractController
     {
         if ($this->isCsrfTokenValid('delete'.$program->getId(), $request->request->get('_token'))) {
             $programRepository->remove($program, true);
-            $this->addFlash('danger', 'Le program a été supprimé avec succès !');
+            $this->addFlash('danger', 'La série a été supprimée avec succès !');
         }
 
         return $this->redirectToRoute('program_index', [], Response::HTTP_SEE_OTHER);
