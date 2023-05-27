@@ -6,9 +6,18 @@ use App\Entity\Program;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Persistence\ObjectManager;
 use Doctrine\Common\DataFixtures\DependentFixtureInterface;
+use Symfony\Component\String\Slugger\SluggerInterface;
 
 class ProgramFixtures extends Fixture implements DependentFixtureInterface
 {
+    private SluggerInterface $slugger;
+
+    public function __construct(SluggerInterface $slugger)
+    {
+        $this->slugger = $slugger;
+    }
+
+
     public function load(ObjectManager $manager): void
     {
         $program = new Program();
@@ -17,6 +26,7 @@ class ProgramFixtures extends Fixture implements DependentFixtureInterface
         $program->setCategory($this->getReference('category_Action'));
         $program->setYear(2023);
         $program->setPoster('walking_dead.jpeg');
+        $program->setSlug($this->slugger->slug($program->getTitle()));
         $manager->persist($program);
         $this->addReference('program_1', $program);
         $manager->flush();
@@ -27,6 +37,7 @@ class ProgramFixtures extends Fixture implements DependentFixtureInterface
         $program->setCategory($this->getReference('category_Aventure'));
         $program->setYear(2023);
         $program->setPoster('arcane.jpg');
+        $program->setSlug($this->slugger->slug($program->getTitle()));
         $manager->persist($program);
         $this->addReference('program_2', $program);
         $manager->flush();
@@ -37,6 +48,7 @@ class ProgramFixtures extends Fixture implements DependentFixtureInterface
         $program->setCategory($this->getReference('category_Animation'));
         $program->setYear(2023);
         $program->setPoster('les_simpsons.jpeg');
+        $program->setSlug($this->slugger->slug($program->getTitle()));
         $manager->persist($program);
         $this->addReference('program_3', $program);
         $manager->flush();
@@ -47,6 +59,7 @@ class ProgramFixtures extends Fixture implements DependentFixtureInterface
         $program->setCategory($this->getReference('category_Fantastique'));
         $program->setYear(2023);
         $program->setPoster('game_of_throne.webp');
+        $program->setSlug($this->slugger->slug($program->getTitle()));
         $manager->persist($program);
         $this->addReference('program_4', $program);
         $manager->flush();
@@ -57,6 +70,7 @@ class ProgramFixtures extends Fixture implements DependentFixtureInterface
         $program->setCategory($this->getReference('category_Horreur'));
         $program->setYear(2023);
         $program->setPoster('penny_dreadful.jpeg');
+        $program->setSlug($this->slugger->slug($program->getTitle()));
         $manager->persist($program);
         $this->addReference('program_5', $program);
         $manager->flush();

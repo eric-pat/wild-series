@@ -19,9 +19,9 @@
                 <p class="card-text">Titre : {{ episode.title }}</p>
                 <p class="card-text">{{ episode.synopsis }}</p>
                 <a href="{{ path('program_season_show',
-                    { programId: program.id,
-                        seasonId: season.id,
-                        episodeId: episode.id}) }}">
+                    { programSlug: program.slug,
+                        seasonSlug: season.slug,
+                        episodeSlug: episode.slug}) }}">
                     Retour à la liste des épisodes
                 </a>
             </div>

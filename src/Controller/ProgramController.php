@@ -8,6 +8,7 @@ use App\Entity\Season;
 use App\Form\ProgramType;
 use App\Repository\CategoryRepository;
 use App\Repository\ProgramRepository;
+use App\Service\ProgramDuration;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Entity;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -48,6 +49,8 @@ class ProgramController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            $slug = $slugger->slug($program->getTitle());
+            $program->setSlug($slug);
             // Récupérer le fichier téléchargé
             $posterFile = $form->get('poster')->getData();
 
@@ -77,18 +80,22 @@ class ProgramController extends AbstractController
         ]);
     }
 
-    #[Route('/show/{id}', name: 'show')]
-    public function show(Program $program):Response
+    #[Route('/{slug}', name: 'show')]
+    public function show(
+        Program $program,
+        ProgramDuration $programDuration):Response
     {
         return $this->render('program/show.html.twig', [
             'program' => $program,
+            'programDuration' => $programDuration->calculate($program),
         ]);
     }
 
-    #[Route('/{programId}/seasons/{seasonId}', name: 'season_show',methods: ['get'])]
-    #[Entity('program', options: ['mapping'=> ['programId'=>'id']])]
-    #[Entity('season', options: ['mapping'=>['seasonId'=>'id']])]
-    public function showSeason(Program $program, Season $season): Response
+    #[Route('/{programSlug}/seasons/{seasonSlug}', name: 'season_show', methods: ['GET'])]
+    #[Entity('program', options: ['mapping' => ['programSlug' => 'slug']])]
+    #[Entity('season', options: ['mapping' => ['seasonSlug' => 'slug']])]
+    public function showSeason(Program $program,
+                               Season $season): Response
     {
         return $this->render('program/season_show.html.twig', [
             'program' => $program,
@@ -96,10 +103,11 @@ class ProgramController extends AbstractController
         ]);
     }
 
-    #[Route('/{programId}/seasons/{seasonId}/episode/{episodeId}', name: 'episode_show',methods: ['get'])]
-    #[Entity('program', options: ['mapping'=> ['programId'=>'id']])]
-    #[Entity('season', options: ['mapping'=>['seasonId'=>'id']])]
-    #[Entity('episode', options: ['mapping'=>['episodeId'=>'id']])]
+
+    #[Route('/{programSlug}/seasons/{seasonSlug}/episode/{episodeSlug}', name: 'episode_show',methods: ['GET'])]
+    #[Entity('program', options: ['mapping'=> ['programId'=>'slug']])]
+    #[Entity('season', options: ['mapping'=>['seasonSlug'=>'slug']])]
+    #[Entity('episode', options: ['mapping'=>['episodeSlug'=>'slug']])]
     public function showEpisode(Program $program,
                                 Season $season,
                                 Episode $episode): Response
@@ -111,7 +119,7 @@ class ProgramController extends AbstractController
         ]);
     }
 
-    #[Route('/{id}', name: 'delete', methods: ['POST'])]
+    #[Route('/{slug}', name: 'delete', methods: ['POST'])]
     public function delete(Request $request,
                            Program $program,
                            ProgramRepository $programRepository): Response
@@ -123,4 +131,5 @@ class ProgramController extends AbstractController
 
         return $this->redirectToRoute('program_index', [], Response::HTTP_SEE_OTHER);
     }
+
 }

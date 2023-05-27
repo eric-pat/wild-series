@@ -14,7 +14,10 @@
                 <h6>Saisons :</h6>
                 {% for season in program.seasons %}
                     <div>
-                        <a href="{{ path('program_season_show', {'programId': program.id, 'seasonId': season.id}) }}"><strong>Saison {{ season.number }}</strong></a>
+                        <a href="{{ path('program_season_show',
+                                {'programSlug': program.slug,
+                                'seasonSlug': season.slug}) }}">
+                            <strong>Saison {{ season.number }}</strong></a>
                         <p>Description : {{ season.description }}</p>
                     </div>
                 {% endfor %}
@@ -33,6 +36,9 @@
                     {% endfor %}
                 </ul>
             </div>
+            <hr>
+            <p>Durée totale : {{ programDuration }}</p>
+
         </div>
     </div>
 

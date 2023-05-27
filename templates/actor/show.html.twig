@@ -12,7 +12,7 @@
                     <h5 class="card-title">{{ actor.name }}</h5>
                     <p>Séries associés.es :</p>
                     {% for program in actor.programs %}
-                        <a href="{{ path('program_show', { 'id': program.id }) }}">
+                        <a href="{{ path('program_show', { 'slug': program.slug }) }}">
                             Série : {{ program.title }}
                         </a>
                         <br>

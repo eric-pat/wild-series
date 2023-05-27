@@ -35,6 +35,9 @@ class Season
     )]
     private Collection $episodes;
 
+    #[ORM\Column(length: 255)]
+    private ?string $slug = null;
+
     public function __construct()
     {
         $this->episodes = new ArrayCollection();
@@ -119,6 +122,18 @@ class Season
                 $episode->setSeason(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getSlug(): ?string
+    {
+        return $this->slug;
+    }
+
+    public function setSlug(string $slug): self
+    {
+        $this->slug = $slug;
 
         return $this;
     }

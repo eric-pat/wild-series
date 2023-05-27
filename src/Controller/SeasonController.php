@@ -10,6 +10,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\String\Slugger\SluggerInterface;
 
 #[Route('/season')]
 class SeasonController extends AbstractController
@@ -23,13 +24,18 @@ class SeasonController extends AbstractController
     }
 
     #[Route('/new', name: 'app_season_new', methods: ['GET', 'POST'])]
-    public function new(Request $request, SeasonRepository $seasonRepository): Response
+    public function new(Request $request,
+                        SeasonRepository $seasonRepository,
+                        SluggerInterface $slugger,
+    ): Response
     {
         $season = new Season();
         $form = $this->createForm(SeasonType::class, $season);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            $slug = $slugger->slug($season->getTitle());
+            $season->setSlug($slug);
             $seasonRepository->save($season, true);
             $this->addFlash('success', 'La nouvelle saison a été créé !');
 
@@ -42,7 +48,7 @@ class SeasonController extends AbstractController
         ]);
     }
 
-    #[Route('/{id}', name: 'app_season_show', methods: ['GET'])]
+    #[Route('/{slug}', name: 'app_season_show', methods: ['GET'])]
     public function show(Season $season): Response
     {
         return $this->render('season/show.html.twig', [
@@ -50,7 +56,7 @@ class SeasonController extends AbstractController
         ]);
     }
 
-    #[Route('/{id}/edit', name: 'app_season_edit', methods: ['GET', 'POST'])]
+    #[Route('/{slug}/edit', name: 'app_season_edit', methods: ['GET', 'POST'])]
     public function edit(Request $request, Season $season, SeasonRepository $seasonRepository): Response
     {
         $form = $this->createForm(SeasonType::class, $season);
@@ -68,7 +74,7 @@ class SeasonController extends AbstractController
         ]);
     }
 
-    #[Route('/{id}', name: 'app_season_delete', methods: ['POST'])]
+    #[Route('/{slug}', name: 'app_season_delete', methods: ['POST'])]
     public function delete(Request $request,
                            Season $season,
                            SeasonRepository $seasonRepository): Response
