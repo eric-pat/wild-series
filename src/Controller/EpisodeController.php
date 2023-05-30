@@ -81,8 +81,10 @@ class EpisodeController extends AbstractController
         ]);
     }
 
-    #[Route('/{slug}', name: 'delete', methods: ['POST'])]
-    public function delete(Request $request, Episode $episode, EpisodeRepository $episodeRepository): Response
+    #[Route('/{id}', name: 'delete', methods: ['POST'])]
+    public function delete(Request $request,
+                           Episode $episode,
+                           EpisodeRepository $episodeRepository): Response
     {
         if ($this->isCsrfTokenValid('delete'.$episode->getId(), $request->request->get('_token'))) {
             $episodeRepository->remove($episode, true);

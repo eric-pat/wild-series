@@ -3,7 +3,7 @@
 {% block title %}Season index{% endblock %}
 
 {% block body %}
-    <h1>Season index</h1>
+    <h1 class="d-flex justify-content-center my-5">Toutes les saisons</h1>
 
     <table class="table">
         <thead>
@@ -23,8 +23,10 @@
                 <td>{{ season.year }}</td>
                 <td>{{ season.description }}</td>
                 <td>
-                    <a href="{{ path('app_season_show', {'id': season.id}) }}">show</a>
-                    <a href="{{ path('app_season_edit', {'id': season.id}) }}">edit</a>
+                    <a href="{{ path('app_season_show',
+                        {'slug': season.slug}) }}">show</a>
+                    <a href="{{ path('app_season_edit',
+                        {'slug': season.slug}) }}">edit</a>
                 </td>
             </tr>
         {% else %}

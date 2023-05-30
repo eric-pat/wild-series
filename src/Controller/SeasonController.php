@@ -57,7 +57,9 @@ class SeasonController extends AbstractController
     }
 
     #[Route('/{slug}/edit', name: 'app_season_edit', methods: ['GET', 'POST'])]
-    public function edit(Request $request, Season $season, SeasonRepository $seasonRepository): Response
+    public function edit(Request $request,
+                         Season $season,
+                         SeasonRepository $seasonRepository): Response
     {
         $form = $this->createForm(SeasonType::class, $season);
         $form->handleRequest($request);

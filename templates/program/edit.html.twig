@@ -1,0 +1,13 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Edit Serie{% endblock %}
+
+{% block body %}
+<h1 class="d-flex justify-content-center my-5">Modifier une Série :</h1>
+
+    {{ include('program/_form.html.twig') }}
+
+    <a href="{{ path('program_index') }}">back to list</a>
+
+
+{% endblock %}

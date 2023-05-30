@@ -2,6 +2,7 @@
 // src/Controller/ProgramController.php
 namespace App\Controller;
 
+use App\Entity\Category;
 use App\Entity\Episode;
 use App\Entity\Program;
 use App\Entity\Season;
@@ -13,8 +14,12 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Entity;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Mailer\Exception\TransportExceptionInterface;
+use Symfony\Component\Mailer\MailerInterface;
+use Symfony\Component\Mime\Email;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\String\Slugger\SluggerInterface;
+
 
 
 #[Route('/program', name: 'program_')]
@@ -35,41 +40,36 @@ class ProgramController extends AbstractController
         ]);
     }
 
+    /**
+     * @throws TransportExceptionInterface
+     */
     #[Route('/new', name: 'new')]
     public function new(Request $request,
+                        MailerInterface $mailer,
                         ProgramRepository $programRepository,
                         SluggerInterface $slugger): Response
     {
         $program = new Program();
-        $form = $this->createForm(ProgramType::class, $program, [
-            'attr' => [
-                'enctype' => 'multipart/form-data',
-            ],
-        ]);
+        $form = $this->createForm(ProgramType::class, $program);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
             $slug = $slugger->slug($program->getTitle());
             $program->setSlug($slug);
-            // Récupérer le fichier téléchargé
-            $posterFile = $form->get('poster')->getData();
 
-            // Générer un nouveau nom pour l'image en utilisant le slugger
-            $originalFileName = pathinfo($posterFile->getClientOriginalName(), PATHINFO_FILENAME);
-            $safeFileName = $slugger->slug($originalFileName);
-            $newFileName = $safeFileName.'.'.$posterFile->guessExtension();
-
-            // Déplacer le fichier vers le dossier souhaité
-            $posterFile->move(
-                '/Users/eric-pat/Desktop/wild-series/public/images/poster',
-                $newFileName
-            );
-
-            $program->setPosterPath($newFileName);
-
-            // Enregistrer l'entité en base de données
             $programRepository->save($program, true);
-            $this->addFlash('success', 'La nouvelle série a été créée avec succès !');
+
+            $email = (new Email())
+                ->from('ekcz@orange,fr.com')
+                ->to('ekcz@orange,fr.com')
+                ->subject('Une nouvelle série vient d\'être publiée !')
+                ->html($this->renderView('program/newProgramEmail.html.twig',
+                    ['program' => $program]));
+
+            $mailer->send($email);
+
+            $this->addFlash('success',
+                'La nouvelle série a été créée avec succès !');
 
             return $this->redirectToRoute('program_index');
         }
@@ -105,7 +105,7 @@ class ProgramController extends AbstractController
 
 
     #[Route('/{programSlug}/seasons/{seasonSlug}/episode/{episodeSlug}', name: 'episode_show',methods: ['GET'])]
-    #[Entity('program', options: ['mapping'=> ['programId'=>'slug']])]
+    #[Entity('program', options: ['mapping'=> ['programSlug'=>'slug']])]
     #[Entity('season', options: ['mapping'=>['seasonSlug'=>'slug']])]
     #[Entity('episode', options: ['mapping'=>['episodeSlug'=>'slug']])]
     public function showEpisode(Program $program,
@@ -116,6 +116,32 @@ class ProgramController extends AbstractController
             'program' => $program,
             'season' => $season,
             'episode' => $episode,
+        ]);
+    }
+
+    #[Route('/{slug}/edit', name: 'edit', methods: ['GET', 'POST'])]
+    public function edit(
+        Request $request,
+        Program $program,
+        ProgramRepository $programRepository,
+        SluggerInterface $slugger
+    ): Response
+    {
+        $form = $this->createForm(ProgramType::class, $program);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $slug = $slugger->slug($program->getTitle());
+            $program->setSlug($slug);
+            $programRepository->save($program, true);
+            $this->addFlash('success', "La série a été mis à jour");
+
+            return $this->redirectToRoute('program_index', [], Response::HTTP_SEE_OTHER);
+        }
+
+        return $this->renderForm('program/edit.html.twig', [
+            'program' => $program,
+            'form' => $form,
         ]);
     }
 

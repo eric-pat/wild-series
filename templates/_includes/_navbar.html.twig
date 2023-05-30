@@ -1,6 +1,6 @@
 <nav class="navbar bg-body-tertiary">
     <div class="container-fluid">
-        <a class="navbar-brand" href="/">
+        <a class="navbar-brand" href="{{ path('app_index') }}">
             <img src="{{ asset('images/logo-navbar.png') }}" alt="logo Wild-series"> </a>
         <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas"
                 data-bs-target="#offcanvasNavbar" aria-controls="offcanvasNavbar"
@@ -36,15 +36,15 @@
                     </li>
                     <li class="nav-item">
                         <a class="nav-link"
+                           href="{{ path('program_new') }}">Créer une série</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link"
                            href="{{ path('category_index') }}">Les Categories</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link"
                            href="{{ path('category_new') }}">Créer une Categorie</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link"
-                           href="{{ path('program_new') }}">Créer une série</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link"

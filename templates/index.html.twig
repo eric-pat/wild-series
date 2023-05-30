@@ -3,6 +3,18 @@
 {% block title %}Wild Series{% endblock %}
 
 {% block body %}
-<h1 class="d-flex justify-content-center my-5">Bienvenue sur Wild-Series !</h1>
+    <h1 class="d-flex justify-content-center my-5">Bienvenue sur Wild-Series !</h1>
 
+    <div class="d-flex justify-content-center">
+        <video src="video/video.mp4" autoplay muted id="myVideo"></video>
+    </div>
+
+    <script>
+        const video = document.getElementById('myVideo');
+
+        video.addEventListener('ended', function() {
+            window.location.href = '{{ path('program_index') }}';
+        });
+    </script>
 {% endblock %}
+

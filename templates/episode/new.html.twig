@@ -3,11 +3,11 @@
 {% block title %}New Episode{% endblock %}
 
 {% block body %}
-    <h1 class="d-flex justify-content-center my-5">Creer nouveaux Episodes</h1>
+    <h1 class="d-flex justify-content-center my-5">Créer de nouveaux Episodes</h1>
 
     {{ include('episode/_form.html.twig') }}
 
-    <a href="{{ path('app_episode_index') }}"
+    <a href="{{ path('episode_index') }}"
        class="d-flex justify-content-center my-5">
         back to list
     </a>
