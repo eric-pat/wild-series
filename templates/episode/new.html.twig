@@ -1,0 +1,14 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}New Episode{% endblock %}
+
+{% block body %}
+    <h1 class="d-flex justify-content-center my-5">Créer de nouveaux Episodes</h1>
+
+    {{ include('episode/_form.html.twig') }}
+
+    <a href="{{ path('episode_index') }}"
+       class="d-flex justify-content-center my-5">
+        back to list
+    </a>
+{% endblock %}

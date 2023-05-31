@@ -1,0 +1,24 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Wild-series - Category{% endblock %}
+
+{% block body %}
+    <h1 class="d-flex justify-content-center my-5">Liste des catégories</h1>
+    <div class="d-flex justify-content-evenly mb-5">
+        <div class="d-flex flex-wrap justify-content-evenly">
+            <ul>
+                {% for category in categories %}
+                    <a href="{{ path('category_show', {'categoryName' : category.name}) }}">
+                        <li>{{ category.name }}</li>
+                    </a>
+                {% endfor %}
+            </ul>
+        </div>
+    </div>
+    <a href="{{ path('app_index') }}"
+       class="d-flex justify-content-center text-decoration-none">
+        <button class="btn btn-return" type="button">Retour à
+            l'accueil
+        </button>
+    </a>
+{% endblock %}

@@ -1,0 +1,12 @@
+{% extends 'baseEmail.html.twig' %}
+
+{% block title %}New program {{ program.title }} created{% endblock %}
+
+{% block body %}
+    <img src="public/images/logo-navbar.png" alt="logo du site">
+    <h1>Nouvelle série <br>"{{ program.title }}"</h1>
+    <p>Bonjour, la série {{ program.title }} a bien été créée sur Wild Series</p>
+    <p>Synopsis : {{ program.synopsis }}</p>
+    <p>{{ program.poster }}</p>
+{% endblock %}
+

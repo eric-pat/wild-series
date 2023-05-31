@@ -1,0 +1,15 @@
+{% extends "base.html.twig" %}
+
+{% block body %}
+    <div class="d-flex justify-content-center my-5">
+        {{ form_start(form) }}
+        {{ form_label(form.name) }}
+        {{ form_widget(form.name) }}
+        <button type="submit" class="btn btn-return">Ajout d'une category</button>
+        {{ form_end(form) }}
+    </div>
+    <a href="{{ path('category_index') }}" class="d-flex justify-content-center
+    text-decoration-none">
+        <button class="btn btn-return" type="button">Retour aux categories</button>
+    </a>
+{% endblock %}

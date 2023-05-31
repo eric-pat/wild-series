@@ -1,0 +1,34 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Wild-series #{{ program.title }}{% endblock %}
+
+{% block body %}
+    <h1 class="d-flex justify-content-center my-5">
+        {{ program.title }} - Saison {{ season.number }}
+    </h1>
+
+    <div class="d-flex justify-content-center mb-5">
+
+        <div class="card" style="width: 36rem;background-color: var(--quinary-color)">
+            <img class="card-img-top" src="{{ asset('uploads/images/posters/' ~ program.poster) }}"
+                 alt="{{ program.title }}">
+            <div class="card-body">
+                <h5 class="card-title">{{ program.title }}</h5>
+                <p class="card-text">{{ season.description }}</p>
+                {% for episode in season.episodes %}
+                    <ul>
+                        <a href="{{ path('program_episode_show',
+                         { programSlug: program.slug,
+                             seasonSlug: season.slug,
+                             episodeSlug: episode.slug}) }}">
+                            <li>{{ episode.title }}</li>
+                        </a>
+                    </ul>
+                {% endfor %}
+                <a href="{{ path('program_show', {'slug': program.slug}) }}">
+                    Retour à la liste des saisons
+                </a>
+            </div>
+        </div>
+    </div>
+{% endblock %}

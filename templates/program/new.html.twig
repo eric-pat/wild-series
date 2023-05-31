@@ -1,0 +1,14 @@
+{% extends "base.html.twig" %}
+
+{% block title %}New Serie{% endblock %}
+
+{% block body %}
+    <h1 class="d-flex justify-content-center my-5">Creer nouvelles series</h1>
+
+    {{ include('program/_form.html.twig') }}
+
+    <a href="{{ path('program_index') }}"
+       class="d-flex justify-content-center my-5">
+        retour vers les series
+    </a>
+{% endblock %}
