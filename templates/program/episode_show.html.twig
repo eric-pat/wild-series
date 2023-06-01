@@ -3,29 +3,68 @@
 {% block title %}Wild-series #{{ program.title }}{% endblock %}
 
 {% block body %}
-    <h1 class="d-flex justify-content-center my-5">
-        {{ program.title }} - Saison {{ season.number }}
+    <h1 class="d-flex justify-content-center mt-5">
+        {{ program.title }} - Saison {{ season.number }} <br>
     </h1>
-    <h2 class="d-flex justify-content-center">
-        Episode {{ episode.id }} - {{ episode.title }}
-    </h2>
-    <div class="d-flex justify-content-center my-5">
-        <div class="card" style="width: 36rem;background-color: var(--quinary-color)">
-            <img class="card-img-top" src="{{ asset('uploads/images/posters/' ~ program.poster) }}"
-                 alt="{{ program.title }}">
-            <div class="card-body">
-                <h5 class="card-title">{{ program.title }}</h5>
-                <p class="card-text">Episode : {{ episode.number }}</p>
-                <p class="card-text">Durée : {{ episode.duration }}</p>
-                <p class="card-text">Titre : {{ episode.title }}</p>
-                <p class="card-text">{{ episode.synopsis }}</p>
-                <a href="{{ path('program_season_show',
-                    { programSlug: program.slug,
-                        seasonSlug: season.slug,
-                        episodeSlug: episode.slug}) }}">
-                    Retour à la liste des épisodes
-                </a>
+    <h2 class="d-flex justify-content-center my-5">Episode {{ episode.id }}
+        - {{ episode.title }}</h2>
+    <section class="d-flex justify-content-around">
+        <div class="d-flex col-md-5 justify-content-center my-5">
+            <div class="card" style="background-color: var(--quinary-color)">
+                <img class="card-img-top"
+                     src="{{ asset('uploads/images/posters/' ~ program.poster) }}"
+                     alt="{{ program.title }}">
+                <div class="card-body">
+                    <h5 class="card-title">{{ program.title }}</h5>
+                    <p class="card-text">Episode : {{ episode.number }}</p>
+                    <p class="card-text">Durée : {{ episode.duration }}</p>
+                    <p class="card-text">Titre : {{ episode.title }}</p>
+                    <p class="card-text">{{ episode.synopsis }}</p>
+                    <a href="{{ path('program_season_show',
+                        { programSlug: program.slug,
+                            seasonSlug: season.slug,
+                            episodeSlug: episode.slug}) }}">
+                        Retour à la liste des épisodes
+                    </a>
+                </div>
             </div>
         </div>
-    </div>
+        <div class="d-flex col-md-5 flex-column my-5">
+            <div>
+                {% if app.user %}
+                    <form class="comment-form" action="" method="POST">
+                        <div class="form-group col-md-2 my-2">
+                            <label for="rate">Note :</label>
+                            {{ form_widget(form.rate, { 'attr': {'class': 'form-control', 'min': 1, 'max': 5} }) }}
+                        </div>
+
+                        <div class="form-group my-2">
+                            <label for="comment">Commentaire :</label>
+                            {{ form_widget(form.comment, { 'attr': {'class': 'form-control', 'rows': 4} }) }}
+                        </div>
+
+                        <button type="submit" class="btn btn-primary my-2">Ajouter un
+                            commentaire
+                        </button>
+                    </form>
+
+                {% endif %}
+            </div>
+            <div class=" my-5"
+                style="background-color: var(--quinary-color); border-radius: 5px">
+                {% if comments %}
+                    <div >
+                        <h2 class="d-flex justify-content-center mt-3">Commentaires :</h2>
+                        {% for comment in comments %}
+                            <ul class="comment">
+                                <li>Auteur : {{ comment.getAuthor().getEmail() }}</li>
+                                <li>Note : {{ comment.getRate() }}</li>
+                                <li>{{ comment.getComment() }}</li>
+                            </ul>
+                        {% endfor %}
+                    </div>
+                {% endif %}
+            </div>
+        </div>
+    </section>
 {% endblock %}
