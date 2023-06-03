@@ -9,6 +9,7 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\NumberType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\HttpFoundation\File\File;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Vich\UploaderBundle\Form\Type\VichFileType;
 
@@ -31,7 +32,7 @@ class ProgramType extends AbstractType
                         'by_reference' => false,
             ])
             ->add('posterFile', VichFileType::class, [
-                        'required'      => false,
+                        'required'      => true,
                         'allow_delete'  => false, // not mandatory, default is true
                         'download_uri' => false, // not mandatory, default is true
             ])

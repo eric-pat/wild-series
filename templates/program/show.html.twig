@@ -9,7 +9,8 @@
 
     <div class="d-flex justify-content-center mb-5">
 
-        <div class="card" style="width: 36rem;background-color: var(--quinary-color)">
+        <div class="card" style="width: 36rem;
+        background-color: var(--primary-color)">
             <img class="card-img-top" src="{{ asset('uploads/images/posters/' ~ program.poster) }}"
                  alt="{{ program.title }}">
             <div class="card-body">
@@ -26,7 +27,7 @@
                     </div>
                 {% endfor %}
                 <a href="{{ path('program_index') }}">
-                    Retour à la liste des series
+                    <button class="btn btn-success">Retour à la liste des series</button>
                 </a>
                 <hr>
                 <strong>Liste des Acteurs :</strong>
@@ -39,15 +40,14 @@
                         <li>Aucun acteur pour cette série</li>
                     {% endfor %}
                 </ul>
+                <hr>
+                <p>Durée totale : {{ programDuration }}</p>
+                <hr>
+                <a href="{{ path('program_edit', { 'slug': program.slug }) }}">
+                    <button class="btn btn-warning">Éditer la série</button>
+                </a>
             </div>
-            <hr>
-            <p>Durée totale : {{ programDuration }}</p>
-            <hr>
-            <a href="{{ path('program_edit', { 'slug': program.slug }) }}">
-                edit serie
-            </a>
-            <hr>
-            {{ include('program/_delete_form.html.twig') }}
+
         </div>
     </div>
 

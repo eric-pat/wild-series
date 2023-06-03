@@ -6,11 +6,12 @@
     <h1 class="d-flex justify-content-center mt-5">
         {{ program.title }} - Saison {{ season.number }} <br>
     </h1>
-    <h2 class="d-flex justify-content-center my-5">Episode {{ episode.id }}
-        - {{ episode.title }}</h2>
+    <h2 class="d-flex justify-content-center my-5">Episode : {{ episode.number }}
+        <br> Titre : {{ episode.title }}</h2>
     <section class="d-flex justify-content-around">
-        <div class="d-flex col-md-5 justify-content-center my-5">
-            <div class="card" style="background-color: var(--quinary-color)">
+        <div class="d-flex col-md-6 justify-content-center my-5">
+            <div class="card"
+                 style="background-color: var(--primary-color)">
                 <img class="card-img-top"
                      src="{{ asset('uploads/images/posters/' ~ program.poster) }}"
                      alt="{{ program.title }}">
@@ -24,12 +25,13 @@
                         { programSlug: program.slug,
                             seasonSlug: season.slug,
                             episodeSlug: episode.slug}) }}">
-                        Retour à la liste des épisodes
+                        <button class="btn btn-success">Retour à la liste des épisodes</button>
+
                     </a>
                 </div>
             </div>
         </div>
-        <div class="d-flex col-md-5 flex-column my-5">
+        <div class="d-flex col-md-4 flex-column my-5">
             <div>
                 {% if app.user %}
                     <form class="comment-form" action="" method="POST">
@@ -51,15 +53,32 @@
                 {% endif %}
             </div>
             <div class=" my-5"
-                style="background-color: var(--quinary-color); border-radius: 5px">
+                 style="background-color: var(--primary-color); border-radius: 5px">
                 {% if comments %}
-                    <div >
+                    <div>
                         <h2 class="d-flex justify-content-center mt-3">Commentaires :</h2>
                         {% for comment in comments %}
-                            <ul class="comment">
-                                <li>Auteur : {{ comment.getAuthor().getEmail() }}</li>
-                                <li>Note : {{ comment.getRate() }}</li>
-                                <li>{{ comment.getComment() }}</li>
+                            <ul class="comment px-5">
+                                <li>Auteur : {{ comment.author.email }}</li>
+                                <li>Note : {{ comment.rate }}</li>
+                                <li>{{ comment.comment }}</li>
+                                {% if is_granted("ROLE_ADMIN") or
+                                    (is_granted("ROLE_CONTRIBUTOR") and
+                                    comment.author == app.user) %}
+                                    {# {{ include('program/_delete_comment.html.twig') }} #}
+                                    <form method="post"
+                                          action="{{ path('program_delete_comment',
+                                                 {'slug': program.slug,
+                                                  'slug': season.slug,
+                                                  'slug': episode.slug,
+                                                  'commentId': comment.id}) }}"
+                                          onsubmit="return confirm('Etes vous sur de vouloir supprimer ?');">
+                                        <input type="hidden" name="_token"
+                                               value="{{ csrf_token('delete' ~ comment.id) }}">
+                                        <button class="btn btn-danger  mt-3">Supprimer</button>
+                                    </form>
+                                {% endif %}
+                                <hr>
                             </ul>
                         {% endfor %}
                     </div>

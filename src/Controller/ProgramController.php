@@ -18,11 +18,15 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Bundle\SecurityBundle\Security;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
 use Symfony\Component\Mailer\Exception\TransportExceptionInterface;
 use Symfony\Component\Mailer\MailerInterface;
 use Symfony\Component\Mime\Email;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\String\Slugger\SluggerInterface;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
+use Symfony\Component\Form\Extension\Core\Type\FileType;
+
 
 #[Route('/program', name: 'program_')]
 class ProgramController extends AbstractController
@@ -59,6 +63,7 @@ class ProgramController extends AbstractController
             $slug = $slugger->slug($program->getTitle());
             $program->setSlug($slug);
 
+            $program->setOwner($this->getUser());
             $programRepository->save($program, true);
 
             $email = (new Email())
@@ -157,8 +162,19 @@ class ProgramController extends AbstractController
         SluggerInterface $slugger
     ): Response
     {
+        if ($this->getUser() !== $program->getOwner()) {
+            // If not the owner, throws a 403 Access Denied exception
+            throw $this->createAccessDeniedException('Only the owner can edit the program!');
+        }
+
         $form = $this->createForm(ProgramType::class, $program);
         $form->handleRequest($request);
+
+        $imageURL = null;
+        if ($program->getPosterFile()) {
+            $imageURL = $this->getParameter('app.upload_directory') . '/' . $program->getPosterFile();
+        }
+
 
         if ($form->isSubmitted() && $form->isValid()) {
             $slug = $slugger->slug($program->getTitle());
@@ -173,9 +189,11 @@ class ProgramController extends AbstractController
             'program' => $program,
             'form' => $form,
         ]);
+
     }
 
-    #[Route('/{slug}', name: 'delete', methods: ['POST'])]
+    //delete program
+    #[Route('/{slug}/delete', name: 'delete', methods: ['POST'])]
     public function delete(Request $request,
                            Program $program,
                            ProgramRepository $programRepository): Response
@@ -183,6 +201,22 @@ class ProgramController extends AbstractController
         if ($this->isCsrfTokenValid('delete'.$program->getId(), $request->request->get('_token'))) {
             $programRepository->remove($program, true);
             $this->addFlash('danger', 'La série a été supprimée avec succès !');
+        }
+
+        return $this->redirectToRoute('program_index', [], Response::HTTP_SEE_OTHER);
+    }
+
+    //delete comment
+    #[Route('/{slug}/comment/delete/{commentId}', name: 'delete_comment', methods: ['POST'])]
+    public function deleteComment(Request $request,
+                                  $commentId,
+                                  CommentRepository $commentRepository): Response
+    {
+        $comment = $commentRepository->find($commentId);
+
+        if ($this->isCsrfTokenValid('delete'.$comment->getId(), $request->request->get('_token'))) {
+            $commentRepository->remove($comment, true);
+            $this->addFlash('danger', 'Le commentaire a été supprimé avec succès !');
         }
 
         return $this->redirectToRoute('program_index', [], Response::HTTP_SEE_OTHER);
