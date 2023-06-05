@@ -34,8 +34,8 @@ class Program
     #[Assert\NotBlank(message: 'Le champ synopsis de la série ne doit pas être vide')]
     #[Assert\Regex(
         pattern: '/^(?!.*plus belle la vie)/',
-        match: true,
-        message: 'On parle de vraies séries ici'
+        message: 'On parle de vraies séries ici',
+        match: true
     )]
     private ?string $synopsis = null;
 
