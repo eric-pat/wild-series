@@ -14,7 +14,8 @@
             {{ encore_entry_script_tags('app') }}
         {% endblock %}
     </head>
-    <body {{ stimulus_controller('theme') }}
+
+    <body {{ stimulus_controller('symfony/ux-swup/swup') }}{{ stimulus_controller('theme') }}
             {{ stimulus_target('theme', 'body') }}>
 
     <header>{% include ('_includes/_navbar.html.twig') %}</header>
@@ -30,6 +31,10 @@
             </div>
         {% endfor %}
     {% endfor %}
+    
+    <div id="swup">
         {% block body %}{% endblock %}
+    </div>
+    
     </body>
 </html>

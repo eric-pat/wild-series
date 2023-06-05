@@ -14,7 +14,7 @@ body {
     background-color: var(--secondary-color);
     display: flex;
     flex-direction: column;
-    color: white;
+    color: white !important;
 }
 
 a {
@@ -25,4 +25,6 @@ a {
 a:hover {
     color: var(--quaternary-color);
 }
-
+ a p {
+     color: white !important;
+ }
