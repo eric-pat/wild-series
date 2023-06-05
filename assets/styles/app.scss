@@ -14,17 +14,19 @@ body {
     background-color: var(--secondary-color);
     display: flex;
     flex-direction: column;
-    color: white !important;
+    color: white!important;
 }
 
 a {
-    color: var(--quinary-color);
+    color: white;
     text-decoration: none;
 }
 
 a:hover {
     color: var(--quaternary-color);
 }
- a p {
-     color: white !important;
- }
+
+.card-body {
+    color: white!important;
+}
+

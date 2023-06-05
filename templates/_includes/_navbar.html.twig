@@ -6,6 +6,7 @@
         <div>
             {% if app.user %}
                 <a href="{{ path('app_my-profile') }}">Mon Compte</a>
+                {{ app.user.username }}
                 <a class="mx-5" href="{{ path('app_logout') }}">Se déconnecter
                     <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30"
                          fill="currentColor" class="bi bi-person-slash"
