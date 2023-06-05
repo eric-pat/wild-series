@@ -2,6 +2,7 @@ import {Controller} from "@hotwired/stimulus";
 
 export default class extends Controller {
     static targets = ["body"];
+
     //darkMode = false;
 
     connect() {
@@ -11,7 +12,7 @@ export default class extends Controller {
 
     toggleDarkMode(event) {
         this.darkMode = !this.darkMode;
-        localStorage.setItem('darkMode', this.darkMode )
+        localStorage.setItem('darkMode', this.darkMode)
         this.updateTheme();
     }
 
@@ -19,4 +20,3 @@ export default class extends Controller {
         this.bodyTarget.setAttribute('data-bs-theme', this.darkMode ? 'dark' : '');
     }
 }
-

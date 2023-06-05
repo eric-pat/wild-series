@@ -15,14 +15,16 @@
         {% endblock %}
     </head>
 
-    <body {{ stimulus_controller('symfony/ux-swup/swup') }}{{ stimulus_controller('theme') }}
+
+    <body {{ stimulus_controller('theme') }}
             {{ stimulus_target('theme', 'body') }}>
 
     <header>{% include ('_includes/_navbar.html.twig') %}</header>
 
-        <button {{ stimulus_action('theme', 'toggleDarkMode')}}>
-            clic me
-        </button>
+{#    <button {{ stimulus_action('theme', 'toggleDarkMode') }}>#}
+{#        clic me#}
+{#    </button>#}
+
 
     {% for category, messages in app.flashes %}
         {% for message in messages %}
@@ -31,10 +33,10 @@
             </div>
         {% endfor %}
     {% endfor %}
-    
-    <div id="swup">
+
+    <div {{ stimulus_controller('symfony/ux-swup/swup') }} id="swup">
         {% block body %}{% endblock %}
     </div>
-    
+
     </body>
 </html>
