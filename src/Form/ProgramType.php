@@ -32,8 +32,8 @@ class ProgramType extends AbstractType
                         'by_reference' => false,
             ])
             ->add('posterFile', VichFileType::class, [
-                        'required'      => true,
-                        'allow_delete'  => false, // not mandatory, default is true
+                        'required'      => false,
+                        'allow_delete'  => true, // not mandatory, default is true
                         'download_uri' => false, // not mandatory, default is true
             ])
         ;
