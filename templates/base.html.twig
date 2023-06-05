@@ -14,8 +14,15 @@
             {{ encore_entry_script_tags('app') }}
         {% endblock %}
     </head>
-    <body>
+    <body {{ stimulus_controller('theme') }}
+            {{ stimulus_target('theme', 'body') }}>
+
     <header>{% include ('_includes/_navbar.html.twig') %}</header>
+
+        <button {{ stimulus_action('theme', 'toggleDarkMode')}}>
+            clic me
+        </button>
+
     {% for category, messages in app.flashes %}
         {% for message in messages %}
             <div class="alert alert-{{ category }}">
