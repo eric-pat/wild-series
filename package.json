@@ -3,21 +3,11 @@
         "@babel/core": "^7.17.0",
         "@babel/preset-env": "^7.16.0",
         "@hotwired/stimulus": "^3.0.0",
-<<<<<<< HEAD
         "@swup/debug-plugin": "^1.0||^2.0||^3.0",
         "@swup/fade-theme": "^1.0",
         "@swup/forms-plugin": "^1.0||^2.0",
         "@swup/slide-theme": "^1.0",
-=======
         "@popperjs/core": "^2.11.8",
-<<<<<<< HEAD
->>>>>>> e7b05a2 (bug on road)
-=======
-        "@swup/debug-plugin": "^1.0||^2.0||^3.0",
-        "@swup/fade-theme": "^1.0",
-        "@swup/forms-plugin": "^1.0||^2.0",
-        "@swup/slide-theme": "^1.0",
->>>>>>> 9002056 (fix bug stimulus)
         "@symfony/stimulus-bridge": "^3.2.0",
         "@symfony/ux-swup": "file:vendor/symfony/ux-swup/assets",
         "@symfony/ux-typed": "file:vendor/symfony/ux-typed/assets",
@@ -42,12 +32,10 @@
         "dev": "encore dev",
         "watch": "encore dev --watch",
         "build": "encore production --progress"
-<<<<<<< HEAD
     },
     "dependencies": {
         "bootstrap": "^5.3.0",
         "jquery": "^3.7.0"
-=======
->>>>>>> e7b05a2 (bug on road)
+
     }
 }
