@@ -45,6 +45,12 @@ class Program
     #[Vich\UploadableField(mapping: 'poster_file', fileNameProperty: 'poster')]
     private ?File $posterFile = null;
 
+    #[ORM\Column(type: Types::STRING,  nullable: true)]
+    private ?string $video = null;
+
+    #[Vich\UploadableField(mapping: 'video_file', fileNameProperty: 'video')]
+    private ?File $videoFile = null;
+
     #[ORM\Column(type: Types::DATETIME_MUTABLE, nullable: true)]
     private ?DatetimeInterface $updatedAt = null;
 
@@ -107,7 +113,7 @@ class Program
         return $this->poster;
     }
 
-    public function setPoster(string $poster): self
+    public function setPoster(?string $poster): self
     {
         $this->poster = $poster;
 
@@ -219,11 +225,11 @@ class Program
     }
 
 
-    public function setPosterFile(?File $image = null): Program
+    public function setPosterFile(?File $posterFile = null): Program
     {
-        $this->posterFile = $image;
+        $this->posterFile = $posterFile;
 
-        if ($image) {
+        if ($posterFile) {
             $this->updatedAt = new \DateTime('now');
         }
 
@@ -257,4 +263,43 @@ class Program
 
         return $this;
     }
+
+    /**
+     * @return string|null
+     */
+    public function getVideo(): ?string
+    {
+        return $this->video;
+    }
+
+    /**
+     * @param string|null $video
+     */
+    public function setVideo(?string $video): void
+    {
+        $this->video = $video;
+    }
+
+    /**
+     * @return File|null
+     */
+    public function getVideoFile(): ?File
+    {
+        return $this->videoFile;
+    }
+
+    /**
+     * @param File|null $videoFile
+     */
+    public function setVideoFile(?File $videoFile = null): program
+    {
+        $this->videoFile = $videoFile;
+
+        if ($videoFile) {
+            $this->updatedAt = new \DateTime('now');
+        }
+
+        return $this;
+    }
+
 }

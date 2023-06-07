@@ -1,15 +1,23 @@
 {% extends "base.html.twig" %}
 
 {% block body %}
+    <h1 class="d-flex justify-content-center my-5">Créer de nouvelles Categories</h1>
     <div class="d-flex justify-content-center my-5">
-        {{ form_start(form) }}
-        {{ form_label(form.name) }}
-        {{ form_widget(form.name) }}
-        <button type="submit" class="btn btn-return">Ajout d'une category</button>
+        {{ form_start(form, {'attr': {'class': 'form-inline'}}) }}
+        <div class="form-group mx-sm-3 mb-3">
+            {{ form_label(form.name, null, {'label_attr': {'class': 'mr-2'}}) }}
+            {{ form_widget(form.name, {'attr': {'class': 'form-control'}}) }}
+        </div>
+        <div class="d-flex justify-content-center">
+            <button type="submit" class="btn btn-success mb-2">
+                Ajouter une catégorie
+            </button>
+        </div>
         {{ form_end(form) }}
     </div>
-    <a href="{{ path('category_index') }}" class="d-flex justify-content-center
-    text-decoration-none">
-        <button class="btn btn-return" type="button">Retour aux categories</button>
+
+    <a href="{{ path('category_index') }}"
+       class="d-flex justify-content-center text-decoration-none">
+        <button class="btn btn-primary" type="button">Retour aux categories</button>
     </a>
 {% endblock %}

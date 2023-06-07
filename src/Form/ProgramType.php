@@ -36,6 +36,12 @@ class ProgramType extends AbstractType
                         'allow_delete'  => true, // not mandatory, default is true
                         'download_uri' => false, // not mandatory, default is true
             ])
+            ->add('videoFile', VichFileType::class, [
+                        'required'      => false,
+                        'allow_delete'  => true,
+                        'download_uri' => false,
+            ])
+
         ;
     }
 

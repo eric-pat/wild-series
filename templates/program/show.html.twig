@@ -46,7 +46,9 @@
                 <hr>
                 <div class="d-flex flex-column justify-content-center">
                     <h5 class="d-flex justify-content-center">Teaser</h5>
-                    <video src="/video/supernatural.mp4" controls style="width: 100%; height: auto;"></video>
+                    <video src="{{ asset('/uploads/videos/' ~ program.video )  }}"
+                           controls style="width: 100%; height: auto;"></video>
+
                 </div>
                 <hr>
                 <div class="d-flex justify-content-between">
