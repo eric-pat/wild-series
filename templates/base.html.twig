@@ -15,10 +15,9 @@
         {% endblock %}
     </head>
 
-
     <body>
 
-    <header>{% include ('_includes/_navbar.html.twig') %}</header>
+    <header id="top">{% include ('_includes/_navbar.html.twig') %}</header>
 
     {% for category, messages in app.flashes %}
         {% for message in messages %}
@@ -29,6 +28,26 @@
     {% endfor %}
 
     {% block body %}{% endblock %}
+
+    <div id="scroll" class="back-to-top-wrapper" style="display: none;">
+        <a href="#top" class="back-to-top-link" aria-label="Scroll to Top">🔝</a>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const backToTopWrapper = document.querySelector('#scroll');
+
+            function handleScroll() {
+                if (window.scrollY > 0) {
+                    backToTopWrapper.style.display = 'block';
+                } else {
+                    backToTopWrapper.style.display = 'none';
+                }
+            }
+
+            window.addEventListener('scroll', handleScroll);
+        });
+    </script>
 
     </body>
 </html>

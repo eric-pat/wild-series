@@ -1,34 +1,29 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Season{% endblock %}
+{% block title %}Season - {{ season.program.title }}{% endblock %}
 
 {% block body %}
-    <h1 class="d-flex justify-content-center my-5">Saison</h1>
+    <h1 class="d-flex justify-content-center my-5">{{ season.program.title }}</h1>
 
-    <table class="table">
-        <tbody>
-            <tr>
-                <th>Id</th>
-                <td>{{ season.id }}</td>
-            </tr>
-            <tr>
-                <th>Number</th>
-                <td>{{ season.number }}</td>
-            </tr>
-            <tr>
-                <th>Year</th>
-                <td>{{ season.year }}</td>
-            </tr>
-            <tr>
-                <th>Description</th>
-                <td>{{ season.description }}</td>
-            </tr>
-        </tbody>
-    </table>
+    <section class="d-flex flex-column align-items-center">
+        <div class="col-md-4 card mb-5">
+            <div class="card-body">
+                <h2 class="card-title">{{ season.slug }}</h2>
+                <h3 class="card-text">Année : {{ season.year }}</h3>
+                <p class="card-text">Synopsis
+                    : {{ season.description }}</p>
+            </div>
+        </div>
 
-    <a href="{{ path('app_season_index') }}">back to list</a>
+        <div class="d-flex justify-content-between col-md-4">
+            <a href="{{ path('app_season_index') }}">
+                <button class="btn btn-success">Retour à la liste des saisons</button>
+            </a>
+            <a href="{{ path('app_season_edit', {'slug': season.slug}) }}">
+                <button class="btn btn-warning">Modifier</button>
+            </a>
 
-    <a href="{{ path('app_season_edit', {'slug': season.slug}) }}">edit</a>
-
-    {{ include('season/_delete_form.html.twig') }}
+            {{ include('season/_delete_form.html.twig') }}
+        </div>
+    </section>
 {% endblock %}

@@ -3,37 +3,38 @@
 {% block title %}Episode index{% endblock %}
 
 {% block body %}
-    <h1 class="d-flex justify-content-center my-5">Tous les épisodes</h1>
+    <h1 class="d-flex justify-content-center my-5">Tous les épisodes:</h1>
 
-    <table class="table">
-        <thead>
-            <tr>
-                <th>Id</th>
-                <th>Title</th>
-                <th>Number</th>
-                <th>Synopsis</th>
-                <th>actions</th>
-            </tr>
-        </thead>
-        <tbody>
+    <a href="{{ path('episode_new') }}" class="d-flex justify-content-center">
+        <button class="btn btn-success mb-5 ">Créer un nouvel épisode</button>
+    </a>
+
+    <div class="row mx-3">
         {% for episode in episodes %}
-            <tr>
-                <td>{{ episode.id }}</td>
-                <td>{{ episode.title }}</td>
-                <td>{{ episode.number }}</td>
-                <td>{{ episode.synopsis }}</td>
-                <td>
-                    <a href="{{ path('episode_show', {'slug': episode.slug}) }}">show</a>
-                    <a href="{{ path('episode_edit', {'slug': episode.slug}) }}">edit</a>
-                </td>
-            </tr>
+            <div class="col-md-3">
+                <div class="card mb-4">
+                    <div class="card-body">
+                        <h5 class="card-title">{{ episode.season.program.title }}</h5>
+                        <h4 class="card-title">{{ episode.season.slug }}</h4>
+                        <p class="card-title">Episode:
+                            {{ episode.number }} - {{ episode.slug }}</p>
+                        <p class="card-text description">{{ episode.synopsis }}</p>
+                        <a href="{{ path('episode_show', {'slug': episode.slug}) }}"
+                           class="btn btn-primary">
+                            Voir
+                        </a>
+                        <a href="{{ path('episode_edit', {'slug': episode.slug}) }}"
+                           class="btn btn-warning">
+                            Modifier
+                        </a>
+                    </div>
+                </div>
+            </div>
         {% else %}
-            <tr>
-                <td colspan="5">no records found</td>
-            </tr>
+            <div class="col">
+                <p>Aucun enregistrement trouvé.</p>
+            </div>
         {% endfor %}
-        </tbody>
-    </table>
+    </div>
 
-    <a href="{{ path('episode_new') }}">Create new</a>
 {% endblock %}

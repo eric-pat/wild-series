@@ -3,30 +3,62 @@
 @import "modules/button";
 
 :root {
-    --primary-color: rgb(46, 46, 65);
-    --secondary-color: rgb(77, 51, 71);
-    --tertiary-color: rgb(134, 17, 46);
-    --quaternary-color: rgb(155, 62, 27);
-    --quinary-color: rgb(251, 109, 16);
+  --primary-color: rgb(46, 46, 65);
+  --secondary-color: rgb(77, 51, 71);
+  --tertiary-color: rgb(134, 17, 46);
+  --quaternary-color: rgb(155, 62, 27);
+  --quinary-color: rgb(251, 109, 16);
 }
 
 body {
-    background-color: var(--secondary-color);
-    display: flex;
-    flex-direction: column;
-    color: white!important;
+  background-color: var(--secondary-color);
+  display: flex;
+  flex-direction: column;
+  color: white !important;
 }
 
 a {
-    color: white;
-    text-decoration: none;
+  color: white;
+  text-decoration: none;
 }
 
 a:hover {
-    color: var(--quaternary-color);
+  color: var(--quaternary-color);
+}
+
+//card
+.card {
+  background-color: var(--primary-color);
 }
 
 .card-body {
-    color: white!important;
+  color: white !important;
+  background-color: var(--primary-color);
 }
 
+
+.description {
+  white-space: normal;
+  overflow: hidden;
+  display: -webkit-box; /* Utilisation des propriétés spécifiques à WebKit */
+  -webkit-line-clamp: 3; /* Limite le nombre de lignes à afficher */
+  -webkit-box-orient: vertical; /* Définit l'orientation de la boîte */
+  min-height: 70px; /* Hauteur minimale pour les cartes */
+}
+
+//scroll to top
+.back-to-top-link {
+  display: inline-block;
+  text-decoration: none;
+  font-size: 2rem;
+  line-height: 3rem;
+  text-align: center;
+  width: 3rem;
+  height: 3rem;
+  border-radius: 50%;
+  background-color: var(--quinary-color);
+}
+
+.back-to-top-wrapper {
+  margin: 1rem;
+}

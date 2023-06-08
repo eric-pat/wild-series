@@ -4,8 +4,9 @@
 
 {% block body %}
     <img src="public/images/logo-navbar.png" alt="logo du site">
-    <h1>Nouvelle série <br>"{{ program.title }}"</h1>
-    <p>Bonjour, la série {{ program.title }} a bien été créée sur Wild Series</p>
+    <h1 class="d-flex justify-content-center">Nouvelle série <br>"{{ program.title }}"</h1>
+    <p>Bonjour, la série <strong>{{ program.title }}</strong> a bien été créée sur Wild
+        Series</p>
     <p>Synopsis : {{ program.synopsis }}</p>
     <p>{{ program.poster }}</p>
 {% endblock %}
