@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\Season;
 use App\Form\SeasonType;
 use App\Repository\EpisodeRepository;
+use App\Repository\ProgramRepository;
 use App\Repository\SeasonRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -16,10 +17,12 @@ use Symfony\Component\String\Slugger\SluggerInterface;
 class SeasonController extends AbstractController
 {
     #[Route('/', name: 'app_season_index', methods: ['GET'])]
-    public function index(SeasonRepository $seasonRepository): Response
+    public function index(SeasonRepository $seasonRepository,
+                          ProgramRepository $programRepository): Response
     {
         return $this->render('season/index.html.twig', [
             'seasons' => $seasonRepository->findAll(),
+            'program' => $programRepository->findAll(),
         ]);
     }
 

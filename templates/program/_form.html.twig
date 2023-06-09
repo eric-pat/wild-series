@@ -40,11 +40,58 @@
                 {% endfor %}
             </div>
         </div>
-        <div class="form-group mb-5">
-            {{ form_label(form.posterFile) }}
-            {{ form_widget(form.posterFile, {'attr': {'class': 'form-control-file'}}) }}
+        <div class="d-flex mb-5">
+            <div class="form-group mb-5">
+                {{ form_label(form.posterFile) }}
+                {{ form_widget(form.posterFile,
+                    {'attr': {'class': 'form-control-file', 'onchange': 'previewImage(this)'}}) }}
+            </div>
+            <div>
+                {% if program is defined and program.poster %}
+                    <img id="preview"
+                         src="{{ asset('uploads/images/posters/' ~ program.poster) }}"
+                         alt="Image associée" style="max-width: 100%; height: auto;">
+                {% else %}
+                    <img id="preview" src="#" alt="Aperçu de l'image"
+                         style="display: none; max-width: 100%; height: auto;">
+                {% endif %}
+            </div>
         </div>
-        <button type="submit" class="btn btn-return">Ajouter une série</button>
+        <div class="d-flex">
+            <div class="form-group mb-5">
+                {{ form_label(form.videoFile) }}
+                {{ form_widget(form.videoFile,
+                {'attr': {'class': 'form-control-file', 'onchange': 'previewVideo(this)'}}) }}
+            </div>
+            <div>
+                <video id="preview-video" controls style="max-width: 100%; height: auto;"></video>
+            </div>
+        </div>
+
+        <button type="submit" class="btn btn-warning">Ajouter une série</button>
         {{ form_end(form) }}
     </div>
 </section>
+
+<script>
+    //FileReader Javascript API for preview img
+    function previewImage(input) {
+        if (input.files && input.files[0]) {
+            const reader = new FileReader();
+            reader.onload = function (e) {
+                document.getElementById('preview').src = e.target.result;
+                document.getElementById('preview').style.display = 'block';
+            }
+            reader.readAsDataURL(input.files[0]);
+        }
+    }
+
+    // FileReader Javascript API for preview video
+    function previewVideo(input) {
+        if (input.files && input.files[0]) {
+            const video = document.getElementById('preview-video');
+            const fileURL = URL.createObjectURL(input.files[0]);
+            video.src = fileURL;
+        }
+    }
+</script>

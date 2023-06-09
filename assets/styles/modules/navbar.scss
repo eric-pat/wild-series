@@ -1,13 +1,13 @@
 .navbar {
-  background-color: var(--primary-color);
+  background-color: var(--primary-color)!important;
 }
 
 .navbar a {
-  color: var(--quinary-color);
+  color: white;
 }
 
 .navbar a:hover {
-  color: var(--quaternary-color);
+  color: var(--quinary-color);
 }
 
 .navbar .nav-link.active {
@@ -42,4 +42,8 @@
 
 .navbar img {
   width: 50%;
+}
+
+.navbar a {
+  text-decoration: none;
 }

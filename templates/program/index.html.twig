@@ -3,17 +3,22 @@
 {% block title %}Wild Series - All programs{% endblock %}
 
 {% block body %}
-    <section>
-        <h1 class="d-flex justify-content-center my-5">Les series :</h1>
+        <h1 class="d-flex justify-content-center my-5">
+            Bienvenue sur Wild-Series !
+        </h1>
 
         <div class="d-flex justify-content-evenly mb-5">
             <div class="d-flex flex-wrap justify-content-evenly">
                 {% for program in programs %}
-                    <div class="card" style="width: 18rem; background-color: var(--quinary-color)">
-                        <img class="card-img-top" src="{{ asset('uploads/images/posters/' ~ program.poster) }}" alt="Poster" style="height:60%">
+                    <div class="card mb-4" style="width: 20rem; color:white;
+                    background-color: var(--primary-color)">
+                        <img class="card-img-top"
+                             src="{{ asset('uploads/images/posters/' ~ program.poster) }}"
+                             alt="Poster" style="height:60%">
                         <div class="card-body d-flex flex-column">
                             <div class="flex-grow-1">
-                                <h5 class="card-title">{{ program.title }}</h5>
+                                <h5 class="card-title">{{ program.title }}
+                                    - {{ program.year }}</h5>
                                 <h6>Catégorie : {{ program.category.name }}</h6>
                                 <p class="card-text">{{ program.synopsis }}</p>
                             </div>
@@ -21,6 +26,11 @@
                                 <a href="{{ path("program_show", { 'slug': program.slug }) }}">
                                     <button class="btn btn-primary">Voir la fiche</button>
                                 </a>
+                                {% if is_granted("ROLE_ADMIN") %}
+                                    <a href="{{ path('program_edit', { 'slug': program.slug} ) }}">
+                                        <button class="btn btn-success">Éditer</button>
+                                    </a>
+                                {% endif %}
                             </div>
                         </div>
                     </div>
@@ -29,18 +39,4 @@
                 {% endfor %}
             </div>
         </div>
-
-        <a href="{{ path('app_index') }}" class="d-flex justify-content-center
-        text-decoration-none mb-5">
-            <button class="btn btn-return" type="button">
-                Retour à l'accueil
-            </button>
-        </a>
-        <a href="{{ path('program_new') }}" class="d-flex justify-content-center
-        text-decoration-none mb-5">
-            <button class="btn btn-return" type="button">
-                Ajouter une série
-            </button>
-        </a>
-    </section>
 {% endblock %}

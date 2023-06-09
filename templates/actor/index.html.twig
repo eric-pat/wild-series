@@ -9,20 +9,21 @@
         <div class="d-flex justify-content-evenly mb-5">
             <div class="d-flex flex-wrap justify-content-evenly">
                 {% for actor in actors %}
-                    <div class="card" style="width: 18rem; background-color: var(--quinary-color)">
+                    <div class="card mb-3" style="width: auto;
+                     background-color: var(--primary-color)">
                         <div class="card-body">
-                            <a href="{{ path('actor_show', { 'id': actor.id }) }}"><h5>{{ actor.name }}</h5></a>
+                            <a href="{{ path('actor_show', { 'id': actor.id }) }}">
+                                <h5>{{ actor.name }}</h5>
+                            </a>
                         </div>
                     </div>
                 {% else %}
-                    Aucune acteur trouvée.
+                    Aucun acteur trouvé.
                 {% endfor %}
             </div>
-
         </div>
-        <a href="{{ path('app_index') }}" class="d-flex justify-content-center
-        text-decoration-none mb-5">
-            <button class="btn btn-return" type="button">
+        <a href="{{ path('app_index') }}" class="d-flex justify-content-center text-decoration-none mb-5">
+            <button class="btn btn-success" type="button">
                 Retour à l'accueil
             </button>
         </a>

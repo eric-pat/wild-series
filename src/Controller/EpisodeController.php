@@ -4,7 +4,10 @@ namespace App\Controller;
 
 use App\Entity\Episode;
 use App\Form\EpisodeType;
+use App\Repository\CategoryRepository;
 use App\Repository\EpisodeRepository;
+use App\Repository\ProgramRepository;
+use App\Repository\SeasonRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -15,10 +18,15 @@ use Symfony\Component\String\Slugger\SluggerInterface;
 class EpisodeController extends AbstractController
 {
     #[Route('/', name: 'index', methods: ['GET'])]
-    public function index(EpisodeRepository $episodeRepository): Response
+    public function index(EpisodeRepository $episodeRepository,
+                          ProgramRepository $programRepository,
+                          SeasonRepository $seasonRepository,
+    ): Response
     {
         return $this->render('episode/index.html.twig', [
             'episodes' => $episodeRepository->findAll(),
+            'seasons' => $seasonRepository->findAll(),
+            'program' => $programRepository->findAll(),
         ]);
     }
 
@@ -81,7 +89,7 @@ class EpisodeController extends AbstractController
         ]);
     }
 
-    #[Route('/{id}', name: 'delete', methods: ['POST'])]
+    #[Route('/{slug}', name: 'delete', methods: ['POST'])]
     public function delete(Request $request,
                            Episode $episode,
                            EpisodeRepository $episodeRepository): Response
@@ -93,4 +101,6 @@ class EpisodeController extends AbstractController
 
         return $this->redirectToRoute('episode_index', [], Response::HTTP_SEE_OTHER);
     }
+
+
 }

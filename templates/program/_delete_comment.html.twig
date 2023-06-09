@@ -1,0 +1,5 @@
+<form method="post" action="{{ path('program_delete_comment', {'slug': program.slug}) }}"
+      onsubmit="return confirm('Etes vous sur de vouloir supprimer ?');">
+    <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ comment.id) }}">
+    <button class="btn btn-danger">Supprimer</button>
+</form>
