@@ -49,7 +49,6 @@
             </div>
             <div class="offcanvas-body">
                 <ul class="navbar-nav justify-content-end flex-grow-1 pe-3">
-
                     <li class="nav-item">
                         <a class="nav-link"
                            href="{{ path('app_index') }}">Accueil</a>
@@ -58,18 +57,26 @@
                         <a class="nav-link"
                            href="{{ path('program_index') }}">Les Séries</a>
                     </li>
+                    {% if is_granted("ROLE_ADMIN")
+                        or (is_granted("ROLE_CONTRIBUTOR")
+                        and app.user) %}
                     <li class="nav-item">
                         <a class="nav-link"
                            href="{{ path('program_new') }}">Créer une série</a>
                     </li>
+                    {% endif %}
                     <li class="nav-item">
                         <a class="nav-link"
                            href="{{ path('category_index') }}">Les Categories</a>
                     </li>
+                    {% if is_granted("ROLE_ADMIN")
+                        or (is_granted("ROLE_CONTRIBUTOR")
+                        and app.user) %}
                     <li class="nav-item">
                         <a class="nav-link"
                            href="{{ path('category_new') }}">Créer une Categorie</a>
                     </li>
+                    {% endif %}
                     <li class="nav-item">
                         <a class="nav-link"
                            href="{{ path('app_season_index') }}">Toutes les Saisons</a>

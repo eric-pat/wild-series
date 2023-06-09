@@ -22,10 +22,14 @@
                            class="btn btn-primary">
                             Voir
                         </a>
+                        {% if is_granted("ROLE_ADMIN")
+                            or (is_granted("ROLE_CONTRIBUTOR")
+                            and app.user) %}
                         <a href="{{ path('app_season_edit', {'slug': season.slug}) }}"
                            class="btn btn-warning">
                             Modifier
                         </a>
+                        {% endif %}
                     </div>
                 </div>
             </div>

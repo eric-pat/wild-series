@@ -27,7 +27,6 @@ use Symfony\Component\String\Slugger\SluggerInterface;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
 
-
 #[Route('/program', name: 'program_')]
 class ProgramController extends AbstractController
 {
@@ -169,12 +168,6 @@ class ProgramController extends AbstractController
 
         $form = $this->createForm(ProgramType::class, $program);
         $form->handleRequest($request);
-
-        $imageURL = null;
-        if ($program->getPosterFile()) {
-            $imageURL = $this->getParameter('app.upload_directory') . '/' . $program->getPosterFile();
-        }
-
 
         if ($form->isSubmitted() && $form->isValid()) {
             $slug = $slugger->slug($program->getTitle());

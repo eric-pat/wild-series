@@ -33,7 +33,6 @@ class ActorController extends AbstractController
 
         return $this->render('actor/show.html.twig', [
             'actor' => $actor,
-            'actors' => $actors,
         ]);
     }
 

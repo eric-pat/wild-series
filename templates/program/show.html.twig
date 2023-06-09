@@ -9,15 +9,15 @@
 
     <div class="d-flex justify-content-center mb-5">
 
-        <div class="card" style="width: 36rem; color:white;
+        <div class="card" style="width: 60rem; color:white;
         background-color: var(--primary-color)">
             <img class="card-img-top"
                  src="{{ asset('uploads/images/posters/' ~ program.poster) }}"
                  alt="{{ program.title }}">
             <div class="card-body">
-                <h5 class="card-title">{{ program.title }}</h5>
+                <h2 class="card-title">{{ program.title }}</h2>
                 <p class="card-text">{{ program.synopsis }}</p>
-                <h6>Saisons :</h6>
+                <h3>Saisons :</h3>
                 {% for season in program.seasons %}
                     <div>
                         <a href="{{ path('program_season_show',
@@ -43,19 +43,26 @@
                 </ul>
                 <hr>
                 <p>Durée totale : {{ programDuration }}</p>
-                <hr>
-                <div class="d-flex flex-column justify-content-center">
-                    <h5 class="d-flex justify-content-center">Teaser</h5>
-                    <video src="{{ asset('/uploads/videos/' ~ program.video )  }}"
-                           controls style="width: 100%; height: auto;"></video>
 
-                </div>
-                <hr>
-                <div class="d-flex justify-content-center">
-                    <a href="{{ path('program_edit', { 'slug': program.slug }) }}">
-                        <button class="btn btn-warning">Éditer la série</button>
-                    </a>
-                </div>
+                {% if program.video is defined and program.video is not empty %}
+                    <hr>
+                    <div class="d-flex flex-column justify-content-center">
+                        <h4 class="d-flex justify-content-center">Teaser</h4>
+                        <video src="{{ asset('/uploads/videos/' ~ program.video ) }}"
+                               controls style="width: 100%; "></video>
+                    </div>
+                {% endif %}
+
+                {% if is_granted("ROLE_ADMIN")
+                    or (is_granted("ROLE_CONTRIBUTOR")
+                    and app.user) %}
+                    <hr>
+                    <div class="d-flex justify-content-center">
+                        <a href="{{ path('program_edit', { 'slug': program.slug }) }}">
+                            <button class="btn btn-warning">Éditer la série</button>
+                        </a>
+                    </div>
+                {% endif %}
             </div>
 
         </div>
