@@ -15,7 +15,12 @@
                  src="{{ asset('uploads/images/posters/' ~ program.poster) }}"
                  alt="{{ program.title }}">
             <div class="card-body">
-                <h2 class="card-title">{{ program.title }}</h2>
+                <h2 class="card-title">{{ program.title }}
+                    <a href="{{ path('program_watchlist', {'id': program.id})}}">
+                        <i class="bi {{ app.user.isInWatchlist(program) ? 'bi-heart-fill' : 'bi-heart' }}"></i>
+                    </a>
+                </h2>
+                {{ dump() }}
                 <p class="card-text">{{ program.synopsis }}</p>
                 <h3>Saisons :</h3>
                 {% for season in program.seasons %}
