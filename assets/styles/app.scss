@@ -12,9 +12,11 @@
 
 body {
   background-color: var(--secondary-color);
-  display: flex;
-  flex-direction: column;
   color: white !important;
+  min-height: 100vh;
+  margin: 0;
+  display: grid;
+  grid-template-rows: auto 1fr auto;
 }
 
 a {

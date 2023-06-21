@@ -1,0 +1,13 @@
+<div{{ attributes }} class="d-flex justify-content-center  flex-column">
+<h5 class="d-flex justify-content-center mb-3">Derniers épisodes ajouté</h5>
+    <div class="d-flex align-items-center flex-column">
+            {% for episode in this.episodes %}
+                {% if loop.index <= 3 %}
+                    <p class="">
+                        {{ episode.season.program.title }} - {{ episode.season.slug }}
+                        - Episode: {{ episode.slug }}
+                    </p>
+                {% endif %}
+            {% endfor %}
+    </div>
+</div>

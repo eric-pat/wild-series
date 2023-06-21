@@ -4,6 +4,7 @@
             <img src="{{ asset('images/logo-navbar.png') }}" alt="logo Wild-series">
         </a>
         <div>
+
             {% if app.user %}
                 <a href="{{ path('app_my-profile') }}">Mon Compte</a>
                 {{ app.user.username }}
@@ -69,6 +70,7 @@
                         <a class="nav-link"
                            href="{{ path('category_index') }}">Les Categories</a>
                     </li>
+                    {{ component('navbar') }}
                     {% if is_granted("ROLE_ADMIN")
                         or (is_granted("ROLE_CONTRIBUTOR")
                         and app.user) %}

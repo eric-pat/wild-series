@@ -8,40 +8,58 @@ use App\Entity\Season;
 use App\Entity\Comment;
 use App\Form\CommentType;
 use App\Form\ProgramType;
+use App\Form\SearchProgramType;
+use App\Repository\ActorRepository;
 use App\Repository\CategoryRepository;
 use App\Repository\CommentRepository;
 use App\Repository\EpisodeRepository;
 use App\Repository\ProgramRepository;
+use App\Repository\SeasonRepository;
 use App\Service\ProgramDuration;
+use App\Twig\Components\LastEpisodeComponent;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Entity;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Bundle\SecurityBundle\Security;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
 use Symfony\Component\Mailer\Exception\TransportExceptionInterface;
 use Symfony\Component\Mailer\MailerInterface;
 use Symfony\Component\Mime\Email;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\String\Slugger\SluggerInterface;
-use Symfony\Component\HttpFoundation\File\UploadedFile;
-use Symfony\Component\Form\Extension\Core\Type\FileType;
 
 #[Route('/program', name: 'program_')]
 class ProgramController extends AbstractController
 {
-    #[Route('/', name: 'index')]
+    #[Route('/', name: 'index', methods: ['GET', 'POST'])]
     public function index(
+        Request $request,
         ProgramRepository $programRepository,
-        CategoryRepository $categoryRepository
-    ): Response
-    {
+        CategoryRepository $categoryRepository,
+        ActorRepository $actorRepository,
+    ): Response {
         $programs = $programRepository->findAll();
         $categories = $categoryRepository->findAll();
+        $actors = $actorRepository->findAll();
+
+        $form = $this->createForm(SearchProgramType::class);
+        $form->handleRequest($request);
+
+        $actorName = null;
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $search = $form->getData()['search'];
+            $programs = $programRepository->findLikeName($search);
+        } else {
+            $programs = $programRepository->findAll();
+        }
 
         return $this->render('program/index.html.twig', [
             'programs' => $programs,
             'categories' => $categories,
+            'form' => $form->createView(),
+            'actors' => $actors,
+            'actorName' => $actorName,
         ]);
     }
 
