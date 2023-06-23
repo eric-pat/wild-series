@@ -73,10 +73,14 @@ class Program
     #[ORM\ManyToOne(targetEntity: User::class)]
     private ?User $owner;
 
+    #[ORM\ManyToMany(targetEntity: User::class, mappedBy: 'watchlist')]
+    private Collection $viewers;
+
     public function __construct()
     {
         $this->seasons = new ArrayCollection();
         $this->actors = new ArrayCollection();
+        $this->viewers = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -290,6 +294,7 @@ class Program
 
     /**
      * @param File|null $videoFile
+     * @return Program
      */
     public function setVideoFile(?File $videoFile = null): program
     {
@@ -302,4 +307,57 @@ class Program
         return $this;
     }
 
+    /**
+     * @return Collection<int, User>
+     */
+    public function getUsers(): Collection
+    {
+        return $this->users;
+    }
+
+    public function addUser(User $user): self
+    {
+        if (!$this->users->contains($user)) {
+            $this->users->add($user);
+            $user->addWatchlist($this);
+        }
+
+        return $this;
+    }
+
+    public function removeUser(User $user): self
+    {
+        if ($this->users->removeElement($user)) {
+            $user->removeWatchlist($this);
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, User>
+     */
+    public function getViewers(): Collection
+    {
+        return $this->viewers;
+    }
+
+    public function addViewer(User $viewer): static
+    {
+        if (!$this->viewers->contains($viewer)) {
+            $this->viewers->add($viewer);
+            $viewer->addWatchlist($this);
+        }
+
+        return $this;
+    }
+
+    public function removeViewer(User $viewer): static
+    {
+        if ($this->viewers->removeElement($viewer)) {
+            $viewer->removeWatchlist($this);
+        }
+
+        return $this;
+    }
 }
