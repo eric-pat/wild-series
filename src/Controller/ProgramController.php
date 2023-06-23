@@ -98,7 +98,7 @@ class ProgramController extends AbstractController
         return $this->render('program/show.html.twig', [
             'program' => $program,
             'programDuration' => $programDuration->calculate($program),
-            'watchlist' => $this->getUser()->getWatchlist()->contains($program),
+
         ]);
     }
 

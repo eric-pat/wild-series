@@ -76,12 +76,11 @@ class Program
     #[ORM\ManyToMany(targetEntity: User::class, mappedBy: 'watchlist')]
     private Collection $viewers;
 
-
     public function __construct()
     {
         $this->seasons = new ArrayCollection();
         $this->actors = new ArrayCollection();
-        $this->users = new ArrayCollection();
+        $this->viewers = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -295,6 +294,7 @@ class Program
 
     /**
      * @param File|null $videoFile
+     * @return Program
      */
     public function setVideoFile(?File $videoFile = null): program
     {
@@ -335,21 +335,29 @@ class Program
     }
 
     /**
-     * @return Collection
+     * @return Collection<int, User>
      */
     public function getViewers(): Collection
     {
         return $this->viewers;
     }
 
-    /**
-     * @param Collection $viewers
-     */
-    public function setViewers(Collection $viewers): void
+    public function addViewer(User $viewer): static
     {
-        $this->viewers = $viewers;
+        if (!$this->viewers->contains($viewer)) {
+            $this->viewers->add($viewer);
+            $viewer->addWatchlist($this);
+        }
+
+        return $this;
     }
 
+    public function removeViewer(User $viewer): static
+    {
+        if ($this->viewers->removeElement($viewer)) {
+            $viewer->removeWatchlist($this);
+        }
 
-
+        return $this;
+    }
 }
